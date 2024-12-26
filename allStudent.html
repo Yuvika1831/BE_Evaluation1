@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Student</title>
+    <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Student</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color:  rgb(82, 82, 233);
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: rgb(82, 82, 233);
+            font-weight: bold;
+            color: #555;
+        }
+
+        tr:nth-child(even) {
+            background-color: whitesmoke;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>all student data</h1>
+
+    <script>
+        document.getElementsByTagName("h1")[0].innerHTML = "Users Information";
+fetch("http://localhost:3000")
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+
+        // Create the table and its header
+        const table = document.createElement('table');
+        const tableHeader = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+
+        // Define table headers
+        const headers = ['Name', 'Email', 'Password'];
+        headers.forEach(headerText => {
+            const headerCell = document.createElement('th');
+            headerCell.textContent = headerText;
+            headerRow.appendChild(headerCell);
+        });
+
+        tableHeader.appendChild(headerRow);
+        table.appendChild(tableHeader);
+
+        const tableBody = document.createElement('tbody');
+
+        // Populate table rows with user data
+        data.forEach(person => {
+            const row = document.createElement('tr');
+            const nameCell = document.createElement('td');
+            const emailCell = document.createElement('td');
+            const passwordCell = document.createElement('td');
+
+            nameCell.textContent = person.name;
+            emailCell.textContent = person.email;
+            passwordCell.textContent = person.password;
+
+            row.appendChild(nameCell);
+            row.appendChild(emailCell);
+            row.appendChild(passwordCell);
+            tableBody.appendChild(row);
+        });
+
+        table.appendChild(tableBody);
+        document.body.appendChild(table);
+    })
+    .catch((error) => {
+        console.error('Error fetching data:', error);
+    });
+    </script>
+</body>
+
+</html>
